@@ -52,7 +52,7 @@ class getOHLCData():
         status = 500
         soup = ''
         try:
-            resp = requests.get(self.url, headers={"User-Agent": self.user_agent},verify=False)
+            resp = requests.get(self.url, headers={"User-Agent": self.user_agent})
             if resp.status_code == 200:
                 status = 200
                 self.logger.info(f"{self.url} returned status code {status}")
