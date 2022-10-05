@@ -1,7 +1,6 @@
 from sqlalchemy import inspect, create_engine
 import os
 import sys
-sys.path.append('../')
 from Nifty_Scrappers.daily_ohlc_4pm.helpers.logger import return_logger
 from Nifty_Scrappers.daily_ohlc_4pm.helpers.tables import nifty_ohlc,nseindia_nifty,nseindia_optionchain
 from sqlalchemy.orm import sessionmaker
