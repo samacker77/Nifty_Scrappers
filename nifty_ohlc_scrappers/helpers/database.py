@@ -33,7 +33,7 @@ class sqlHandling():
         self.user = 'nse_test' # db user
         self.password = 'nse@123' # db password
         self.database = 'FRONTDB' # db name
-        self.host = 'localhost' # db host
+        self.host = '0.0.0.0' # db host
         self.engine = create_engine(f'mysql+pymysql://{self.user}:{self.password}@{self.host}/{self.database}'
                                     ,pool_size=20, max_overflow=0) #Connection pooling to avoid locking
         self.inspector = inspect(self.engine) # Inspector to inspect tables before creating
