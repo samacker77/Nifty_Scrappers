@@ -7,8 +7,7 @@ import re
 import uuid
 
 import requests
-import sys
-sys.path.append("../")
+
 
 import datetime
 from dateutil.tz import gettz
