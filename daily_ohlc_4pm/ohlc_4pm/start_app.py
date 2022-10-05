@@ -1,9 +1,9 @@
 import sys
 
-from 4pm_daily_ohlc.ohlc_4pm.scrapper import getOHLCData
-from 4pm_daily_ohlc.helpers.database import sqlHandling
-from 4pm_daily_ohlc.helpers.constants import get_list_of_trading_holidays
-from 4pm_daily_ohlc.helpers.logger import return_logger
+from daily_ohlc_4pm.ohlc_4pm.scrapper import getOHLCData
+from daily_ohlc_4pm.helpers.database import sqlHandling
+from daily_ohlc_4pm.helpers.constants import get_list_of_trading_holidays
+from daily_ohlc_4pm.helpers.logger import return_logger
 from datetime import datetime
 from dateutil.tz import gettz
 
