@@ -11,7 +11,6 @@ if __name__ == '__main__':
 
     logger = return_logger()
     trading_holidays = get_list_of_trading_holidays()
-    trading_holidays = []
     today_date = datetime.now(tz=gettz('Asia/Kolkata')).strftime("%d-%m-%Y")
     if today_date in trading_holidays:
         logger.info('Trading holiday. Skipping scrapping')
