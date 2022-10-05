@@ -41,6 +41,14 @@ class sqlHandling():
         self.session = Session() # Creates session with DB
 
 
+    def insert_dataframe(self,table_name,dataframe):
+        try:
+            dataframe.to_sql(table_name,self.engine,if_exists='append',index=False)
+            self.logger.info("Inserted option chain data")
+        except Exception as e:
+            self.logger.info(e)
+        self.session.close()
+        self.engine.dispose()
     def insert(self,table_name,data):
 
         '''
@@ -81,4 +89,5 @@ class sqlHandling():
         except Exception as e:
             self.logger.error('Duplicate entries not allowed. Skipping')
         self.session.close()
+        self.engine.dispose()
         self.logger.info('Session closed.')
