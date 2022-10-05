@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../")
 from daily_ohlc_4pm.helpers.logger import return_logger
 from bs4 import BeautifulSoup
 import re
