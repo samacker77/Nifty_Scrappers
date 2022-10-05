@@ -1,13 +1,11 @@
-import sys
-sys.path.append("../")
-from Nifty_Scrappers.daily_ohlc_4pm.helpers.logger import return_logger
 from bs4 import BeautifulSoup
 import re
-
+from nifty_ohlc_scrappers.helpers.logger import return_logger
 import uuid
 
 import requests
-
+import sys
+sys.path.append("../")
 
 import datetime
 from dateutil.tz import gettz
@@ -64,7 +62,8 @@ class getOHLCData():
     def get_open(self, soup):
         value = 0.0
         try:
-            value = float(soup.find('span', {'class': 'openVal'}).text.replace(",", "").strip())
+            value = float(soup.find_all('span', {'class': 'openVal'})[0].text.replace(",", "").strip())
+            self.logger.info("Extracted open value successfully")
         except Exception as e:
             self.logger.warning(f"Failed to get OPEN VALUE due to {e}")
         return value
@@ -72,7 +71,8 @@ class getOHLCData():
     def get_high(self, soup):
         value = 0.0
         try:
-            value = float(soup.find('span', {'class': 'highVal'}).text.replace(",", "").strip())
+            value = float(soup.find_all('span', {'class': 'highVal'})[0].text.replace(",", "").strip())
+            self.logger.info("Extracted high value successfully")
         except Exception as e:
             self.logger.warning(f"Failed to get HIGH VALUE due to {e}")
         return value
@@ -80,7 +80,8 @@ class getOHLCData():
     def get_low(self, soup):
         value = 0.0
         try:
-            value = float(soup.find('span', {'class': 'lowVal'}).text.replace(",", "").strip())
+            value = float(soup.find_all('span', {'class': 'lowVal'})[0].text.replace(",", "").strip())
+            self.logger.info("Extracted low value successfully")
         except Exception as e:
             self.logger.warning(f"Failed to get LOW VALUE due to {e}")
         return value
@@ -88,7 +89,8 @@ class getOHLCData():
     def get_close(self, soup):
         value = 0.0
         try:
-            value = float(soup.find('span', {'class': 'val'}).text.replace(",", ""))
+            value = float(soup.find_all('span', {'class': 'val'})[0].text.replace(",", "").strip())
+            self.logger.info("Extracted close value successfully")
         except Exception as e:
             self.logger.warning(f"Failed to get CLOSE VALUE due to {e}")
         return value
@@ -96,21 +98,23 @@ class getOHLCData():
     def get_change(self, soup):
         value = 0.0
         try:
-            value = soup.find('span', {'class': 'val_per'}).text.replace(",", "").strip()
+            value = soup.find_all('span', {'class': 'val_per'})[0].text.replace(",", "").strip()
             value = float(re.sub(r"\(.*\)", "", value).strip())
+            self.logger.info("Extracted change value successfully")
         except Exception as e:
-            self.logger.warning(f"Failed to get CHANGE PERCENTAGE due to {e}")
+            self.logger.warning(f"Failed to get CHANGE due to {e}")
         return value
 
     def get_change_percentage(self, soup):
         value = 0.0
         try:
-            value = soup.find('span', {'class': 'val_per'}).text.replace(",", "")
+            value = soup.find_all('span', {'class': 'val_per'})[0].text.replace(",", "").strip()
             matches = re.findall(r"\(.*\)", value)
             if matches:
                 value = float(matches[0].strip().replace("(", "").replace(")", "").replace("%", "").strip())
             else:
                 value = 0.0
+            self.logger.info("Extracted change percentage value successfully")
         except Exception as e:
             self.logger.warning(f"Failed to get CHANGE PERCENTAGE VALUE due to {e}")
         return value
@@ -148,7 +152,3 @@ class getOHLCData():
         end_time = time.time()
         self.logger.info(f"Time take = {round(end_time - start_time, 2)} seconds")
         return data_entity
-
-
-
-

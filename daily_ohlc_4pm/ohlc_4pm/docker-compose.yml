@@ -1,8 +1,0 @@
-version: '1.0'
-services:
-  nifty_ohlc_4pm:
-    image: ohlc_4pm
-    container_name: ohlc_4pm
-  mysql_database:
-    image: mysql/mysql-server:latest
-    container_name: mysql_database

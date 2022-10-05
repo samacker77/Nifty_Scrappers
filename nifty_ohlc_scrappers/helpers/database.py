@@ -1,8 +1,9 @@
 from sqlalchemy import inspect, create_engine
 import os
 import sys
-from Nifty_Scrappers.daily_ohlc_4pm.helpers.logger import return_logger
-from Nifty_Scrappers.daily_ohlc_4pm.helpers.tables import nifty_ohlc,nseindia_nifty,nseindia_optionchain
+sys.path.append('../')
+from nifty_ohlc_scrappers.helpers.logger import return_logger
+from nifty_ohlc_scrappers.helpers.tables import nifty_ohlc,nseindia_nifty
 from sqlalchemy.orm import sessionmaker
 
 
@@ -34,22 +35,11 @@ class sqlHandling():
         self.database = 'FRONTDB' # db name
         self.host = 'localhost' # db host
         self.engine = create_engine(f'mysql+pymysql://{self.user}:{self.password}@{self.host}/{self.database}'
-                                    ,pool_size=30, max_overflow=10) #Connection pooling to avoid locking
+                                    ,pool_size=20, max_overflow=0) #Connection pooling to avoid locking
         self.inspector = inspect(self.engine) # Inspector to inspect tables before creating
         Session = sessionmaker(bind=self.engine) # Binds connectin pool with Session
         self.session = Session() # Creates session with DB
 
-
-    def insert_dataframe(self,table_name,dataframe):
-        try:
-            dataframe.to_sql(table_name, self.engine, if_exists='append',index=False)
-            self.session.close()
-            self.engine.dispose()
-            self.logger.info(f"Data inserted successfully to {table_name}")
-        except Exception as e:
-            self.session.close()
-            self.engine.dispose()
-            self.logger.error(f"Data insertion failed in {table_name} due to {e}")
 
     def insert(self,table_name,data):
 
@@ -89,7 +79,6 @@ class sqlHandling():
                 self.session.commit()
                 self.logger.info(f"Data inserted successsfully for table {table_name}.")
         except Exception as e:
-            self.logger.error(e)
+            self.logger.error('Duplicate entries not allowed. Skipping')
         self.session.close()
-        self.engine.dispose()
         self.logger.info('Session closed.')
