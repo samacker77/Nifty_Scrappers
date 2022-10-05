@@ -1,4 +1,4 @@
-from ohlc_4pm.helpers.logger import return_logger
+from 4pm_daily_ohlc.helpers.logger import return_logger
 from bs4 import BeautifulSoup
 import re
 

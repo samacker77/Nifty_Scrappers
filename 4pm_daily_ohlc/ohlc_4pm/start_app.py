@@ -1,9 +1,9 @@
 import sys
-sys.path.append("../")
-from ohlc_4pm.nifty_ohlc_4pm_ist.scrapper import getOHLCData
-from ohlc_4pm.helpers.database import sqlHandling
-from ohlc_4pm.helpers.constants import get_list_of_trading_holidays
-from ohlc_4pm.helpers.logger import return_logger
+
+from 4pm_daily_ohlc.ohlc_4pm.scrapper import getOHLCData
+from 4pm_daily_ohlc.helpers.database import sqlHandling
+from 4pm_daily_ohlc.helpers.constants import get_list_of_trading_holidays
+from 4pm_daily_ohlc.helpers.logger import return_logger
 from datetime import datetime
 from dateutil.tz import gettz
 
